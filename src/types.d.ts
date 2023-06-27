@@ -1,5 +1,5 @@
 interface IPost {
-  id: string;
+  id?: string;
   datetime: string;
   title: string;
   description: string;
@@ -7,4 +7,9 @@ interface IPost {
 
 interface IResponseData {
   [id: string]: IPost;
+}
+
+interface INewPostForm {
+  title: string;
+  description: string;
 }

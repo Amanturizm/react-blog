@@ -10,7 +10,7 @@ const Posts: React.FC<Props> = ({ posts }) => {
     <div className="d-flex flex-column gap-4">
       {
         posts.map(post => (
-          <PostItem post={post} key={`post-${post.id}`} />
+          <PostItem post={post} key={`post${post.id}`} />
         ))
       }
     </div>

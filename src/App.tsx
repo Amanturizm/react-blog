@@ -1,17 +1,19 @@
 import React from 'react';
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./containers/Home/Home";
+import NewPost from "./containers/NewPost/NewPost";
 
 const App = () => (
   <>
-    <Navbar />
+    <Navbar/>
 
-    <div style={{ paddingTop: 60 }}>
+    <div style={{paddingTop: 60}}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path={useLocation().pathname === "/" ? "/" : "/posts"} element={<Home />} />
+        <Route path="/new-post" element={<NewPost />} />
 
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/"/>}/>
       </Routes>
     </div>
   </>

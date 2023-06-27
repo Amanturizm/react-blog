@@ -19,6 +19,14 @@ const Home = () => {
 
   useEffect(() => {
     void fetchData();
+
+    const interval = setInterval(() => {
+      void fetchData();
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    }
   }, [fetchData]);
 
   return (
