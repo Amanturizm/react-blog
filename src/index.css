@@ -1,0 +1,19 @@
+* {
+  color: #fff;
+}
+
+body {
+  background: url("http://amadeusproject.weebly.com/uploads/1/0/1/8/101865994/background-images/2133460020.jpg") center center no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.nav-link {
+  padding: 0 !important;
+  margin: 8px;
+}
+
+.active {
+  border-radius: 3px;
+  border-bottom: 4px solid #ccc;
+}
