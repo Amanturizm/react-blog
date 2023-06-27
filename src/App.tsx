@@ -7,7 +7,7 @@ const App = () => (
   <>
     <Navbar />
 
-    <div style={{ paddingTop: 50 }}>
+    <div style={{ paddingTop: 60 }}>
       <Routes>
         <Route path="/" element={<Home />} />
 
