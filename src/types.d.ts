@@ -13,3 +13,8 @@ interface INewPostForm {
   title: string;
   description: string;
 }
+
+interface IAboutText {
+  title: string;
+  [paragraph: string]: string;
+}
