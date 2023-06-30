@@ -35,9 +35,8 @@ const Home = () => {
 
   return (
     <div className="mt-3">
-      {
-        posts.length ? <Posts posts={posts} /> : null
-      }
+      { posts.length ? <Posts posts={posts} /> : null }
+
       {preloader}
 
       <Outlet />

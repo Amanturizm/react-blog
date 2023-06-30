@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {Link, Outlet, useNavigate, useParams} from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import axiosApi from "../../axiosApi";
 import CloseBtn from "../CloseBtn/CloseBtn";
 
 const ReadMore = () => {
-  const [ info, setInfo ] = useState<IPost>({ datetime: '', title: '', description: '' });
+  const [info, setInfo] = useState<IPost>({ datetime: '', title: '', description: '' });
   const [loading, setLoading] = useState<boolean>(false);
 
   const { id } = useParams();

@@ -4,7 +4,6 @@ import axiosApi from "../../axiosApi";
 import CloseBtn from "../../components/CloseBtn/CloseBtn";
 
 const PostForm = () => {
-  const navigate = useNavigate();
   const [post, setPost] = useState<IPostForm>({ title: '', description: '' });
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,6 +20,8 @@ const PostForm = () => {
   ) : null;
 
   // POST
+  const navigate = useNavigate();
+
   const postData = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
