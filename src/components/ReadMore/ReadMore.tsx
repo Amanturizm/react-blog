@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
+import {Link, Outlet, useParams} from "react-router-dom";
 import axiosApi from "../../axiosApi";
 
 const ReadMore = () => {
@@ -56,6 +56,10 @@ const ReadMore = () => {
       >
         ×
       </Link>
+
+      <div className="position-absolute end-100 top-0 bg-black rounded-4 me-5">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -59,7 +59,7 @@ const PostForm = () => {
   };
 
   return (
-    <form onSubmit={ id ? editData : postData } className="container w-50">
+    <form onSubmit={ id ? editData : postData } style={{ minWidth: 300 }} className="container w-50 p-4">
       <label htmlFor="input-title" className="form-label">Title</label>
       <input
         name="title"

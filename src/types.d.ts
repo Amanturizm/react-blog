@@ -19,3 +19,16 @@ interface IAboutText {
   title: string;
   [paragraph: string]: string;
 }
+
+interface IContactText {
+  id: string;
+  avatar: string;
+  name: string;
+  phone: string;
+  instagram?: string;
+  vk?: string;
+}
+
+interface IResponseContact {
+  [id: string]: IContactText;
+}

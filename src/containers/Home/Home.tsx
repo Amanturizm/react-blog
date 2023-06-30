@@ -20,7 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     void fetchData();
-  });
+  }, [fetchData]);
 
   return (
     <div className="mt-3">
