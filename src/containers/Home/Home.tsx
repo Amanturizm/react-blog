@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Outlet } from "react-router-dom";
 import axiosApi from "../../axiosApi";
 import Posts from "../../components/Posts/Posts";
 
@@ -10,7 +11,7 @@ const Home = () => {
       const { data: postsData } = await axiosApi.get<IResponseData>('/posts.json');
 
       setPosts(
-        Object.keys(postsData).map((id: string) => ({ ...postsData[id], id }))
+        postsData ? Object.keys(postsData).map((id: string) => ({ ...postsData[id], id })) : []
       );
     } catch (e) {
       console.error(e);
@@ -19,19 +20,15 @@ const Home = () => {
 
   useEffect(() => {
     void fetchData();
-
-    const interval = setInterval(() => {
-      void fetchData();
-    }, 3000);
-
-    return () => {
-      clearInterval(interval);
-    }
-  }, [fetchData]);
+  });
 
   return (
     <div className="mt-3">
-      <Posts posts={posts} />
+      {
+        posts.length ? <Posts posts={posts} /> : null
+      }
+
+      <Outlet />
     </div>
   );
 };

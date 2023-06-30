@@ -9,7 +9,8 @@ interface IResponseData {
   [id: string]: IPost;
 }
 
-interface INewPostForm {
+interface IPostForm {
+  datetime?: string;
   title: string;
   description: string;
 }
