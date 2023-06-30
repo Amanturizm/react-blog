@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import axiosApi from "../../axiosApi";
+import CloseBtn from "../../components/CloseBtn/CloseBtn";
 
 const PostForm = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState<IPostForm>({ title: '', description: '' });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const changeValue = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -12,9 +14,16 @@ const PostForm = () => {
     setPost(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const preloader = loading ? (
+    <div className="preloader">
+      <div className="loader"></div>
+    </div>
+  ) : null;
+
   // POST
   const postData = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const data: IPost = { ...post, datetime: new Date().toDateString() };
@@ -24,6 +33,8 @@ const PostForm = () => {
       navigate('/');
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,12 +42,16 @@ const PostForm = () => {
   const { id } = useParams();
 
   const getPostContent = useCallback(async (id: string) => {
+    setLoading(true);
+
     try {
       const { data } = await axiosApi.get<IPost>(`/posts/${id}.json`);
 
       setPost({ title: data.title, description: data.description, datetime: data.datetime });
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -48,6 +63,7 @@ const PostForm = () => {
 
   const editData = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await axiosApi.put(`/posts/${id}.json`, post);
@@ -55,6 +71,8 @@ const PostForm = () => {
       navigate('/');
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,6 +102,9 @@ const PostForm = () => {
       <button className="btn btn-outline-primary mt-3 px-4">
         { id ? 'Edit' : 'Send' }
       </button>
+
+      { id ? <CloseBtn to={`/posts/${id}`} /> : null }
+      {preloader}
     </form>
   );
 };

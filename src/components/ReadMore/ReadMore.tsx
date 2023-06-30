@@ -1,19 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {Link, Outlet, useParams} from "react-router-dom";
+import {Link, Outlet, useNavigate, useParams} from "react-router-dom";
 import axiosApi from "../../axiosApi";
+import CloseBtn from "../CloseBtn/CloseBtn";
 
 const ReadMore = () => {
   const [ info, setInfo ] = useState<IPost>({ datetime: '', title: '', description: '' });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { id } = useParams();
 
   const fetchData = useCallback(async (id: string) => {
+    setLoading(true);
+
     try {
       const { data } = await axiosApi.get<IPost>(`/posts/${id}.json`);
 
       setInfo({ datetime: data.datetime, title: data.title, description: data.description });
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -23,13 +29,26 @@ const ReadMore = () => {
     }
   }, [fetchData, id]);
 
+  const navigate = useNavigate();
+
   const deletePost = async () => {
+    setLoading(true);
+
     try {
       await axiosApi.delete(`/posts/${id}.json`);
     } catch (e) {
       console.error();
+    } finally {
+      setLoading(false);
+      navigate('/');
     }
   };
+
+  const preloader = loading ? (
+    <div className="preloader">
+      <div className="loader"></div>
+    </div>
+  ) : null;
 
   return (
     <div
@@ -42,20 +61,12 @@ const ReadMore = () => {
 
       <div className="d-flex gap-3 position-absolute bottom-0 end-0 m-4">
         <Link to="edit-post" className="btn btn-outline-success">Edit</Link>
-        <Link to='/' onClick={deletePost} className="btn btn-outline-danger">Delete</Link>
+        <button onClick={deletePost} className="btn btn-outline-danger">Delete</button>
       </div>
 
-      <Link
-        to="/posts"
-        style={{ width: 30, height: 30, fontSize: '3rem', overflow: 'clip' }}
-        className="
-        btn
-        position-absolute top-0 end-0
-        m-3 p-0
-        d-flex justify-content-center align-items-center"
-      >
-        ×
-      </Link>
+      <CloseBtn to="/posts" />
+
+      {preloader}
 
       <div className="position-absolute end-100 top-0 bg-black rounded-4 me-5">
         <Outlet />

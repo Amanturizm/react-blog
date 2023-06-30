@@ -3,14 +3,19 @@ import axiosApi from "../../axiosApi";
 
 const About = () => {
   const [content, setContent] = useState<IAboutText[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
+
     try {
       const { data } = await axiosApi.get('/about.json');
 
       setContent(Object.values(data));
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -34,9 +39,17 @@ const About = () => {
     );
   };
 
+  const preloader = loading ? (
+    <div className="preloader">
+      <div className="loader"></div>
+    </div>
+  ) : null;
+
   return (
     <div className="about m-5">
       { content.length ? content.map(text => getFullTextJSX(text)) : null }
+
+      {preloader}
     </div>
   );
 };
